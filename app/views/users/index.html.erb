@@ -1,0 +1,14 @@
+<h1>Hello <%= current_user.name %></h1>
+
+<div>
+  <ul>
+    <% @posts.each do |p| %>
+    <li>
+      <h2><%= p.title %></h2>
+      <p><%= p.body %></p>
+    </li>
+  </ul>
+</div>
+<div>
+</div>
+<%= button_to "New Post", new_post_path %>
