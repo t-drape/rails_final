@@ -64,6 +64,8 @@ end
 
 gem "devise", "~> 4.9"
 
-gem 'omniauth'
+# gem "omniauth"
 gem "omniauth-rails_csrf_protection"
-gem "omniauth-twitter2"
+
+gem 'omniauth-github'
+# gem "omniauth-twitter2"
