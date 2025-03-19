@@ -13,6 +13,15 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  # When User is the Influencer
+  # has_many :follows, foreign_key: :influencer_id
+  # has_many :user_followers, through: :follows, source: :follower
+
+  # When User is the Follower
+  has_many :follows, foreign_key: :follower_id
+  has_many :influencers, through: :follows, source: :influencer
+
+
   # def self.from_provider_data(data)
   #   puts data
   #   where(provider: provider_data.provider, uid: provider_data.uid).first_or_create do |user|
