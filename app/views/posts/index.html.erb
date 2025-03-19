@@ -15,7 +15,11 @@
           <%= form.submit "Like" %>
         <% end %>
       <% else %>
-        <h3>You Liked This!</h3>
+          <%= link_to "UnLike", like_path(Like.where(user_id: current_user.id).where(post_id: p.id).first), data:
+  {
+                    turbo_method: :delete,
+                    turbo_confirm: "Confirm UnLike?"
+                    } %>
       <% end %>
         <ul>
           <% Comment.where(post_id: p.id).each do |c| %>

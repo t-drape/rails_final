@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to Post.find(params[:post_id])
     else
-      render :new, status: :unprocessable_entity
+      redirect_to posts_path
     end
   end
 

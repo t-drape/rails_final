@@ -35,4 +35,9 @@ class PostsController < ApplicationController
   def post_params
     params.expect(post: [ :user_id, :title, :body ])
   end
+
+  def comment_params
+    params.expect(comment: [ :body, :user_id, :post_id ])
+  end
 end
+

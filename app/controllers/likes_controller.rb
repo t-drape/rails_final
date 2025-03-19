@@ -6,16 +6,17 @@ class LikesController < ApplicationController
   def create
     @like = Like.new(comment_params)
     if @like.save
-      redirect_to Post.find(params[:like][:post_id])
+      redirect_to posts_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  # def destroy
-  #   @comment = Comment.find(params[:id])
-  #   @comment.destroy
-  # end
+  def destroy
+    @like = Like.find(params[:id])
+    @like.destroy
+    redirect_to posts_path
+  end
 
   private
 
