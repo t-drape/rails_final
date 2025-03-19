@@ -40,9 +40,8 @@
       <h3>Follow</h3>
     <% else %>
       <h3><%= User.where(id: p.user_id).first.name %></h3>
-      <h2><%= p.title %></h2>
+      <h2><%= link_to p.title, p %></h2>
       <p><%= p.body %></p>
-      <%= link_to "See Post", p %>
       <ul>
         <% Comment.where(post_id: p.id).each do |c| %>
           <li>
