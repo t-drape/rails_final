@@ -3,12 +3,18 @@
 <div>
   <ul>
     <% @posts.each do |p| %>
-    <li>
-      <h2><%= p.title %></h2>
-      <p><%= p.body %></p>
-    </li>
+      <li>
+        <h2><%= p.title %></h2>
+        <p><%= p.body %></p>
+        <%= link_to "See Post", p %>
+      </li>
+    <% end %>
   </ul>
 </div>
 <div>
 </div>
-<%= button_to "New Post", new_post_path %>
+<div>
+  <%= link_to "Create Post", new_post_path %>
+  <%= link_to "Feed", posts_path %>
+</div>
+<%= button_to "Sign Out", destroy_user_session_path, method: :delete %>

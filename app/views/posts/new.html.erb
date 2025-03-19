@@ -1,0 +1,10 @@
+<%= form_with model: @post do |form| %>
+  <div>
+    <%= form.hidden_field :user_id, {value: current_user.id} %>
+    <%= form.label :title, "Title" %>
+    <%= form.text_field :title, {placeholder: "Title"} %>
+    <%= form.label :body, "Body" %>
+    <%= form.text_area :body, {placeholder: "Your Text Here"} %>
+    <%= form.submit "New Post" %>
+  </div>
+<% end %>
