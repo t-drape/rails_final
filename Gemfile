@@ -67,5 +67,7 @@ gem "devise", "~> 4.9"
 # gem "omniauth"
 gem "omniauth-rails_csrf_protection"
 
-gem 'omniauth-github'
+gem "omniauth-github"
 # gem "omniauth-twitter2"
+
+gem "jsbundling-rails"

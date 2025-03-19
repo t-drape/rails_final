@@ -9,7 +9,9 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true, length: { minimum: 10 }
   validates :password, length: { in: 8..12 }
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
   # def self.from_provider_data(data)
   #   puts data
