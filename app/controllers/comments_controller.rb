@@ -5,8 +5,13 @@ class CommentsController < ApplicationController
 
   def create
     @comment = Comment.new(comment_params)
+    puts params
     if @comment.save
-      redirect_to Post.find(params[:post_id])
+      if params[:comment][:page] == "1"
+        redirect_to Post.find(@comment.post_id)
+      else
+        redirect_to posts_path
+      end
     else
       redirect_to posts_path
     end
@@ -20,6 +25,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.expect(comment: [ :body, :user_id, :post_id ])
+    params.expect(comment: [ :body, :user_id, :post_id])
   end
 end

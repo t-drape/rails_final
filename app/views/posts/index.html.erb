@@ -3,69 +3,52 @@
 
 <% @posts.each do |p| %>
   <div>
-    <% if current_user != User.where(id: p.user_id).first %>
       <h3><%= User.where(id: p.user_id).first.name %></h3>
       <h2><%= link_to p.title, p %></h2>
       <p><%= p.body %></p>
-      <%= link_to "See Post", p %>
-      <% if Like.where(user_id: current_user.id).where(post_id: p.id).empty? %>
-        <%= form_with model: @like do |form| %>
-          <%= form.hidden_field :user_id, {value: current_user.id} %>
-          <%= form.hidden_field :post_id, {value: p.id} %>
-          <%= form.submit "Like" %>
+      <div class="links">
+        <div data-controller="visibility" data-visibility-shown-class="visibility--shown">
+          <button data-action="visibility#show" class="btn">Comment</button>
+          <div class="comment-form">
+            <%= form_with model: @comment do |form| %>
+              <%= form.hidden_field :page, {value: 0} %>
+              <%= form.hidden_field :user_id, {value: current_user.id} %>
+              <%= form.hidden_field :post_id, {value: p.id} %>
+              <%= form.label :body, "Comment" %>
+              <%= form.text_area :body, {placeholder: "Your Text Here"} %>
+              <%= form.submit "Add" %>
+            <% end %>
+          </div>
+        </div>
+        <% if current_user != User.where(id: p.user_id).first %>
+            <div class="like">
+              <% if Like.where(user_id: current_user.id).where(post_id: p.id).empty? %>
+                <%= form_with model: @like do |form| %>
+                  <%= form.hidden_field :page, {value: 0} %>
+                  <%= form.hidden_field :user_id, {value: current_user.id} %>
+                  <%= form.hidden_field :post_id, {value: p.id} %>
+                  <%= form.submit "Like", class: "btn" %>
+                <% end %>
+              <% else %>
+                <%= button_to "UnLike", like_path(Like.where(user_id: current_user.id).where(post_id: p.id).first), method: :delete, class: "btn" %>
+              <% end %>
+            </div>
+            <div class="follow">
+              <%= button_to "Follow", class: "btn" %>
+            </div>
+          </div>
         <% end %>
-      <% else %>
-          <%= link_to "UnLike", like_path(Like.where(user_id: current_user.id).where(post_id: p.id).first), data:
-  {
-                    turbo_method: :delete,
-                    turbo_confirm: "Confirm UnLike?"
-                    } %>
-      <% end %>
+    </div>
+    <div>
+      <% if !p.comments.empty? %>
         <ul>
-          <% Comment.where(post_id: p.id).each do |c| %>
-            <li>
-              <h3><%= User.find(c.user_id).name %></h3>
-              <p><%= c.body %></p>
-            </li>
-          <% end %>
-        </ul>
-      <div data-controller="visibility" data-visibility-shown-class="visibility--shown">
-        <button data-action="visibility#show">Comment</button>
-        <div class="comment-form">
-          <%= form_with model: @comment do |form| %>
-            <%= form.hidden_field :user_id, {value: current_user.id} %>
-            <%= form.hidden_field :post_id, {value: p.id} %>
-            <%= form.label :body, "Comment" %>
-            <%= form.text_area :body, {placeholder: "Your Text Here"} %>
-            <%= form.submit "Add" %>
-          <% end %>
-        </div>
-      </div>
-      <h3>Follow</h3>
-    <% else %>
-      <h3><%= User.where(id: p.user_id).first.name %></h3>
-      <h2><%= link_to p.title, p %></h2>
-      <p><%= p.body %></p>
-      <ul>
-        <% Comment.where(post_id: p.id).each do |c| %>
           <li>
-            <h3><%= User.find(c.user_id).name %></h3>
-            <p><%= c.body %></p>
+            <h3><%= User.find(Comment.where(post_id: p.id)[-1].user_id).name %></h3>
+            <p><%= Comment.where(post_id: p.id)[-1].body %></p>
           </li>
-        <% end %>
-      </ul>
-      <div data-controller="visibility" data-visibility-shown-class="visibility--shown">
-        <button data-action="visibility#show">Comment</button>
-        <div class="comment-form">
-          <%= form_with model: @comment do |form| %>
-            <%= form.hidden_field :user_id, {value: current_user.id} %>
-            <%= form.hidden_field :post_id, {value: p.id} %>
-            <%= form.label :body, "Comment" %>
-            <%= form.text_area :body, {placeholder: "Your Text Here"} %>
-            <%= form.submit "Add" %>
-          <% end %>
-        </div>
-    <% end %>
+        </ul>
+      <% end %>
+    </div>
   </div>
 <% end %>
 <%= link_to "Home", :root %>

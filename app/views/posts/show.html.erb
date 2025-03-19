@@ -7,17 +7,54 @@
 </div>
 
 <div class="links">
-  <%= link_to "Home", :root %>
+  <div data-controller="visibility" data-visibility-shown-class="visibility--shown">
+    <button class="btn" data-action="visibility#show">Comment</button>
+    <div class="comment-form">
+      <%= form_with model: @comment do |form| %>
+        <%= form.hidden_field :page, {value: 1} %>
+        <%= form.hidden_field :user_id, {value: current_user.id} %>
+        <%= form.hidden_field :post_id, {value: @post.id} %>
+        <%= form.label :body, "Comment" %>
+        <%= form.text_area :body, {placeholder: "Your Text Here"} %>
+        <%= form.submit "Add" %>
+      <% end %>
+    </div>
+  </div>
   <% if current_user.id == @author.id %>
-    <%= link_to "Destroy", post_path(@post), data:
-    {
-                      turbo_method: :delete,
-                      turbo_confirm: "Are you sure?"
-                      } %>
+    <%= button_to "Destroy", post_path(@post), method: :delete, class: "btn" %>
   <% else %>
-    <h3>Like This Post</h3>
-
+    <div class="like">
+      <% if Like.where(user_id: current_user.id).where(post_id: @post.id).empty? %>
+        <%= form_with model: @like do |form| %>
+          <%= form.hidden_field :page, {value: 1} %>
+          <%= form.hidden_field :user_id, {value: current_user.id} %>
+          <%= form.hidden_field :post_id, {value: @post.id} %>
+          <%= form.submit "Like", class: "btn" %>
+        <% end %>
+      <% else %>
+        <%= button_to "UnLike", like_path(Like.where(user_id: current_user.id).where(post_id: @post.id).first), method: :delete, class: "btn" %>
+      <% end %>
+    </div>
+    <div class="follow">
+      <%= button_to "Follow", class: "btn" %>
+    </div>
   <% end %>
+</div>
+
+<div>
+  <% if !@post.comments.empty? %>
+    <ul>
+      <li>
+        <h3><%= User.find(Comment.where(post_id: @post.id)[-1].user_id).name %></h3>
+        <p><%= Comment.where(post_id: @post.id)[-1].body %></p>
+      </li>
+    </ul>
+  <% end %>
+</div>
+
+<div class="links single">
+  <%= button_to "Home", :root, class: "btn", method: :get %>
+  <%= button_to "Feed", posts_path, class: "btn", method: :get %>
 </div>
 
 

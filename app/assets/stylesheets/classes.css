@@ -5,3 +5,17 @@
 .visibility--shown .comment-form {
   display: initial;
 }
+
+.links {
+  width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.btn {
+  width: 75px;
+}
+
+.links .single {
+  grid-template-columns: 1fr 1fr;
+}

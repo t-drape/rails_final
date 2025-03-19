@@ -6,7 +6,6 @@ class PostsController < ApplicationController
   end
 
   def new
-    @comment = Comment.new
     @post = Post.new
   end
 
@@ -22,6 +21,8 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @author = User.find(@post.user_id)
+    @comment = Comment.new
+    @like = Like.new
   end
 
   def destroy
