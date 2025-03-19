@@ -39,3 +39,6 @@ page. However, the problem I encountered was with validation. What happens when 
 I tried the normal method of render :new, status: :unprocessable_entity. But since the comments don't have their 
 own page, that didn't work. I settled for redirecting the user back to the index page, but I will look to change this
 to a render in the future.
+
+
+The next error was similar to the last one, but it affected both the comments and the likes. When a user liked or commented on a post, I did not want to redirect away from the current page. However, I added the ability to like and comment on both the Posts index page and the Show page. So, i added another value to each form, one that specified which page the form came from. Then, I used an if statement in the controller action to adjust the redirect statement depending on which page the user was on.

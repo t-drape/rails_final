@@ -28,6 +28,6 @@ class LikesController < ApplicationController
   private
 
   def like_params
-    params.expect(like: [ :user_id, :post_id, ])
+    params.expect(like: [ :user_id, :post_id ])
   end
 end
