@@ -8,6 +8,8 @@ class FollowsController < ApplicationController
     if @follow.save
       if params[:follow][:page] == "1"
         redirect_to Post.find(params[:follow][:page_id])
+      elsif params[:follow][:page] == "2"
+        redirect_to User.find(@follow.influencer_id)
       else
         redirect_to posts_path
       end

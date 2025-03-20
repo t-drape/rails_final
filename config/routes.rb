@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users
   resources :posts
   resources :comments, only: [ :create, :new ]
-  resources :likes, only: [ :create, :new, :destroy ]
+  resources :liked_posts, only: [ :create, :new, :destroy ]
   resources :follows, only: [ :create, :new, :destroy ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

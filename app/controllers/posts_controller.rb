@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all
     @comment = Comment.new
-    @like = Like.new
+    @like = LikedPost.new
     @follow = Follow.new
   end
 
@@ -23,8 +23,10 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @author = User.find(@post.user_id)
     @comment = Comment.new
-    @like = Like.new
+    @like = LikedPost.new
     @follow = Follow.new
+    @user = User.find(@post.user_id)
+    @users_liked = @post.users_liked
   end
 
   def destroy

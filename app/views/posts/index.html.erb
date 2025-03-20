@@ -1,9 +1,15 @@
+<div class="nav">
+  <%= link_to "Profile", user_path(current_user) %>
+  <%= link_to "Feed", :root %>
+  <%= link_to "New Post", new_post_path %>
+</div>
+
 <%= stylesheet_link_tag "classes.css" %>
 
 
 <% @posts.each do |p| %>
   <div>
-      <h3><%= User.where(id: p.user_id).first.name %></h3>
+      <h3><%#= link_to User.where(id: p.user_id).first.name, user_path(p.user_id) %></h3>
       <h2><%= link_to p.title, p %></h2>
       <p><%= p.body %></p>
       <div class="links">
@@ -21,30 +27,29 @@
           </div>
         </div>
         <% if current_user != User.where(id: p.user_id).first %>
-            <div class="like">
-              <% if Like.where(user_id: current_user.id).where(post_id: p.id).empty? %>
-                <%= form_with model: @like do |form| %>
-                  <%= form.hidden_field :page, {value: 0} %>
-                  <%= form.hidden_field :user_id, {value: current_user.id} %>
-                  <%= form.hidden_field :post_id, {value: p.id} %>
-                  <%= form.submit "Like", class: "btn" %>
-                <% end %>
-              <% else %>
-                <%= button_to "Un Like", like_path(Like.where(user_id: current_user.id).where(post_id: p.id).first), method: :delete, class: "btn" %>
+          <div class="like">
+            <% if LikedPost.where(user_id: current_user.id).where(post_id: p.id).empty? %>
+              <%= form_with model: @like do |form| %>
+                <%= form.hidden_field :page, {value: 0} %>
+                <%= form.hidden_field :user_id, {value: current_user.id} %>
+                <%= form.hidden_field :post_id, {value: p.id} %>
+                <%= form.submit "Like", class: "btn" %>
               <% end %>
-            </div>
-            <div class="follow">
-              <% if Follow.where(follower_id: current_user.id).where(influencer_id: p.user_id).empty? %>
-                <%= form_with model: @follow do |form| %>
-                  <%= form.hidden_field :page, {value: 0} %>
-                  <%= form.hidden_field :follower_id, {value: current_user.id} %>
-                  <%= form.hidden_field :influencer_id, {value: p.user_id} %>
-                  <%= form.submit "Follow", class: "btn" %>
-                <% end %>
-              <% else %>
-                <%= button_to "UnFollow", follow_path(Follow.where(follower_id: current_user.id).where(influencer_id: p.user_id).first), method: :delete, class: "btn" %>
+            <% else %>
+              <%= button_to "UnLike", liked_post_path(LikedPost.where(user_id: current_user.id).where(post_id: p.id).first), method: :delete, class: "btn" %>
+            <% end %>
+          </div>
+          <div class="follow">
+            <% if Follow.where(follower_id: current_user.id).where(influencer_id: p.user_id).empty? %>
+              <%= form_with model: @follow do |form| %>
+                <%= form.hidden_field :page, {value: 0} %>
+                <%= form.hidden_field :follower_id, {value: current_user.id} %>
+                <%= form.hidden_field :influencer_id, {value: p.user_id} %>
+                <%= form.submit "Follow", class: "btn" %>
               <% end %>
-            </div>
+            <% else %>
+              <%= button_to "UnFollow", follow_path(Follow.where(follower_id: current_user.id).where(influencer_id: p.user_id).first), method: :delete, class: "btn" %>
+            <% end %>
           </div>
         <% end %>
     </div>
@@ -60,6 +65,5 @@
     </div>
   </div>
 <% end %>
-<%= link_to "My Profile", user_path(current_user) %>
 
 

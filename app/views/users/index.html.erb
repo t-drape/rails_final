@@ -1,3 +1,9 @@
+<div class="nav">
+  <%= link_to "Profile", user_path(current_user) %>
+  <%= link_to "Feed", :root %>
+  <%= link_to "New Post", new_post_path %>
+</div>
+
 <h1>Hello <%= current_user.name %></h1>
 
 <h2>Discover</h2>

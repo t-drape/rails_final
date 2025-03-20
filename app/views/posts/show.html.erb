@@ -1,9 +1,14 @@
+<div class="nav">
+  <%= link_to "Profile", user_path(current_user) %>
+  <%= link_to "Feed", :root %>
+  <%= link_to "New Post", new_post_path %>
+</div>
+
+<h1><%= link_to @user.name, user_path(@user) %></h1>
+
 <div>
   <h1><%= @post.title %></h1>
   <p><%= @post.body %></p>
-</div>
-
-<div class="comments">
 </div>
 
 <div class="links">
@@ -24,7 +29,7 @@
     <%= button_to "Destroy", post_path(@post), method: :delete, class: "btn" %>
   <% else %>
     <div class="like">
-      <% if Like.where(user_id: current_user.id).where(post_id: @post.id).empty? %>
+      <% if LikedPost.where(user_id: current_user.id).where(post_id: @post.id).empty? %>
         <%= form_with model: @like do |form| %>
           <%= form.hidden_field :page, {value: 1} %>
           <%= form.hidden_field :user_id, {value: current_user.id} %>
@@ -32,7 +37,7 @@
           <%= form.submit "Like", class: "btn" %>
         <% end %>
       <% else %>
-        <%= button_to "UnLike", like_path(Like.where(user_id: current_user.id).where(post_id: @post.id).first), method: :delete, class: "btn" %>
+        <%= button_to "UnLike", liked_post_path(LikedPost.where(user_id: current_user.id).where(post_id: @post.id).first), method: :delete, class: "btn" %>
       <% end %>
     </div>
     <div class="follow">
@@ -52,6 +57,7 @@
 </div>
 
 <div>
+  <h3>Comments:</h3>
   <% if !@post.comments.empty? %>
     <ul>
       <li>
@@ -62,9 +68,15 @@
   <% end %>
 </div>
 
-<div class="links single">
-  <%= button_to "Feed", posts_path, class: "btn", method: :get %>
-  <%= button_to "Profile", user_path(User.find(@post.user_id)), class: "btn", method: :get %>
+<div class="users-likes">
+  <h3>Likes:</h3>
+  <% @users_liked.each do |user| %>
+    <ul>
+      <li>
+        <h3><%= link_to user.name, user %></h3>
+      </li>
+    </ul>
+  <% end %>
 </div>
 
 

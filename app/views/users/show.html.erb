@@ -1,23 +1,65 @@
+<div class="nav">
+  <%= link_to "Profile", user_path(current_user) %>
+  <%= link_to "Feed", :root %>
+  <%= link_to "New Post", new_post_path %>
+</div>
+
 <h1><%= @user.name %></h1>
 
-<div>
+<% if current_user != @user %>
+  <div class="follow">
+    <% if Follow.where(follower_id: current_user.id).where(influencer_id: @user.id).empty? %>
+      <%= form_with model: @follow do |form| %>
+        <%= form.hidden_field :page, {value: 2} %>
+        <%= form.hidden_field :follower_id, {value: current_user.id} %>
+        <%= form.hidden_field :influencer_id, {value: @user.id} %>
+        <%= form.submit "Follow", class: "btn" %>
+      <% end %>
+    <% else %>
+      <%= button_to "UnFollow", follow_path(Follow.where(follower_id: current_user.id).where(influencer_id: @user.id).first), method: :delete, class: "btn" %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="my_posts">
   <h2>Posts:</h2>
   <ul>
     <% @posts.each do |p| %>
       <li>
-        <h2><%= p.title %></h2>
+        <h2><%= link_to p.title, p %></h2>
         <p><%= p.body %></p>
-        <%= link_to "See Post", p %>
       </li>
     <% end %>
   </ul>
 </div>
-<div>
+
+<% if current_user == @user %>
+  <div class="following_posts">
+    <h2>Following:</h2>
+    <% @influencers.each do |i| %>
+      <% if !Post.where(user_id: i.id).last.nil? %>
+        <div class="influencer_post">
+          <h3><%= link_to i.name, Post.where(user_id: i.id).last %></h3>
+          <p><%= Post.where(user_id: i.id).last.body %></p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+
+<div class="liked_posts">
+  <h2>Liked Posts:</h2>
+  <ul>
+    <% @liked.each do |p| %>
+      <li>
+        <h2><%= link_to p.title, p %></h2>
+        <p><%= p.body %></p>
+      </li>
+    <% end %>
+  </ul>
 </div>
-<div>
-  <%= link_to "Create Post", new_post_path %>
-  <%= link_to "Feed", posts_path %>
-</div>
-<% if current_user.id == params[:id]%>
+
+<% if current_user == @user %>
   <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
 <% end %>

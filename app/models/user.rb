@@ -11,12 +11,25 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :likes, dependent: :destroy
+  has_many :likings, foreign_key: :user_id, class_name: "LikedPost"
+  has_many :liked_posts, through: :likings, source: :post
 
   # When the user is the Influencer
-  has_many :followers, class_name: "Follow", foreign_key: :influencer_id, dependent: :destroy
-  # When the user is the Follower
-  has_many :influencers, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
+  has_many :follows, foreign_key: :follower_id
+  has_many :influencers, through: :follows, source: :influencer
+
+  has_many :inverse_follows, foreign_key: :influencer_id, class_name: "Follow"
+  has_many :followers, through: :inverse_follows, source: :follower
+
+  # has_many :inverse_followships, foreign_key: :followee_id, class_name: "Followship"
+  # has_many :followers, through: :inverse_followships, source: :follower
+  # has_many :followers, class_name: "Follow", foreign_key: :influencer_id, dependent: :destroy
+  # # When the user is the Follower
+  # has_many :influencers, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
+  # has_many :follows, foreign_key: :influencer_id
+  # has_many :followers, through: :follows
+  # has_and_belongs_to_many :followers, through: :users_users
+
 
 
   # def self.from_provider_data(data)
