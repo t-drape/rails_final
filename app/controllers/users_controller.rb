@@ -9,5 +9,9 @@ class UsersController < ApplicationController
     @follow = Follow.new
     @influencers = @user.influencers[0..5]
     @liked = @user.liked_posts
+    @down_mail = @user.email.downcase
+    @hash = Digest::SHA256.hexdigest(@down_mail)
+    @parameters = URI.encode_www_form('d' => "https://www.example.com/default.jpg", 's' => 100)
+    @image = "https://www.gravatar.com/avatar/#{@hash}?#{@parameters}"
   end
 end

@@ -6,6 +6,8 @@
 </div>
 
 <h1><%= @user.name %></h1>
+<%= image_tag(@image) %>
+<%# <%= raw Gravatar.tag(@user.email) %>
 
 <% if current_user != @user %>
   <div class="follow">

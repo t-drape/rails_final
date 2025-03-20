@@ -71,3 +71,5 @@ gem "omniauth-github"
 # gem "omniauth-twitter2"
 
 gem "jsbundling-rails"
+
+gem "rb-gravatar"
