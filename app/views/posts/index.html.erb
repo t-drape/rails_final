@@ -30,11 +30,20 @@
                   <%= form.submit "Like", class: "btn" %>
                 <% end %>
               <% else %>
-                <%= button_to "UnLike", like_path(Like.where(user_id: current_user.id).where(post_id: p.id).first), method: :delete, class: "btn" %>
+                <%= button_to "Un Like", like_path(Like.where(user_id: current_user.id).where(post_id: p.id).first), method: :delete, class: "btn" %>
               <% end %>
             </div>
             <div class="follow">
-              <%= button_to "Follow", class: "btn" %>
+              <% if Follow.where(follower_id: current_user.id).where(influencer_id: p.user_id).empty? %>
+                <%= form_with model: @follow do |form| %>
+                  <%= form.hidden_field :page, {value: 0} %>
+                  <%= form.hidden_field :follower_id, {value: current_user.id} %>
+                  <%= form.hidden_field :influencer_id, {value: p.user_id} %>
+                  <%= form.submit "Follow", class: "btn" %>
+                <% end %>
+              <% else %>
+                <%= button_to "UnFollow", follow_path(Follow.where(follower_id: current_user.id).where(influencer_id: p.user_id).first), method: :delete, class: "btn" %>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -51,6 +60,6 @@
     </div>
   </div>
 <% end %>
-<%= link_to "Home", :root %>
+<%= link_to "My Profile", user_path(current_user) %>
 
 

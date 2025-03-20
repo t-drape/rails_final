@@ -36,7 +36,17 @@
       <% end %>
     </div>
     <div class="follow">
-      <%= button_to "Follow", class: "btn" %>
+      <% if Follow.where(follower_id: current_user.id).where(influencer_id: @post.user_id).empty? %>
+        <%= form_with model: @follow do |form| %>
+          <%= form.hidden_field :page_id, {value: @post.id} %>
+          <%= form.hidden_field :page, {value: 1} %>
+          <%= form.hidden_field :follower_id, {value: current_user.id} %>
+          <%= form.hidden_field :influencer_id, {value: @post.user_id} %>
+          <%= form.submit "Follow", class: "btn" %>
+        <% end %>
+      <% else %>
+        <%= button_to "UnFollow", follow_path(Follow.where(follower_id: current_user.id).where(influencer_id: @post.user_id).first), method: :delete, class: "btn" %>
+      <% end %>
     </div>
   <% end %>
 </div>
@@ -53,8 +63,8 @@
 </div>
 
 <div class="links single">
-  <%= button_to "Home", :root, class: "btn", method: :get %>
   <%= button_to "Feed", posts_path, class: "btn", method: :get %>
+  <%= button_to "Profile", user_path(User.find(@post.user_id)), class: "btn", method: :get %>
 </div>
 
 

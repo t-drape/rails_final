@@ -3,6 +3,7 @@ class PostsController < ApplicationController
     @posts = Post.all
     @comment = Comment.new
     @like = Like.new
+    @follow = Follow.new
   end
 
   def new
@@ -23,6 +24,7 @@ class PostsController < ApplicationController
     @author = User.find(@post.user_id)
     @comment = Comment.new
     @like = Like.new
+    @follow = Follow.new
   end
 
   def destroy

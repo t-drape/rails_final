@@ -13,13 +13,10 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
-  # When User is the Influencer
-  # has_many :follows, foreign_key: :influencer_id
-  # has_many :user_followers, through: :follows, source: :follower
-
-  # When User is the Follower
-  has_many :follows, foreign_key: :follower_id
-  has_many :influencers, through: :follows, source: :influencer
+  # When the user is the Influencer
+  has_many :followers, class_name: "Follow", foreign_key: :influencer_id, dependent: :destroy
+  # When the user is the Follower
+  has_many :influencers, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
 
 
   # def self.from_provider_data(data)
