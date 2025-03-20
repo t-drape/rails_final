@@ -1,7 +1,8 @@
 <div class="nav">
   <%= link_to "Profile", user_path(current_user) %>
   <%= link_to "Feed", :root %>
-  <%= link_to "New Post", new_post_path %>
+  <%= link_to "Post", new_post_path %>
+  <%= link_to "Connect", users_path %>
 </div>
 
 <h1><%= @user.name %></h1>
@@ -39,7 +40,7 @@
     <% @influencers.each do |i| %>
       <% if !Post.where(user_id: i.id).last.nil? %>
         <div class="influencer_post">
-          <h3><%= link_to i.name, Post.where(user_id: i.id).last %></h3>
+          <h3><%= link_to i.name, i %></h3>
           <p><%= Post.where(user_id: i.id).last.body %></p>
         </div>
       <% end %>

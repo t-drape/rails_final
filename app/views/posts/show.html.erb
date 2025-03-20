@@ -1,15 +1,11 @@
 <div class="nav">
   <%= link_to "Profile", user_path(current_user) %>
   <%= link_to "Feed", :root %>
-  <%= link_to "New Post", new_post_path %>
+  <%= link_to "Post", new_post_path %>
+  <%= link_to "Connect", users_path %>
 </div>
 
 <h1><%= link_to @user.name, user_path(@user) %></h1>
-
-<div>
-  <h1><%= @post.title %></h1>
-  <p><%= @post.body %></p>
-</div>
 
 <div class="links">
   <div data-controller="visibility" data-visibility-shown-class="visibility--shown">
@@ -54,6 +50,11 @@
       <% end %>
     </div>
   <% end %>
+</div>
+
+<div>
+  <h1><%= @post.title %></h1>
+  <p><%= @post.body %></p>
 </div>
 
 <div>

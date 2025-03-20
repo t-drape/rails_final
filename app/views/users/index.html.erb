@@ -1,28 +1,20 @@
 <div class="nav">
   <%= link_to "Profile", user_path(current_user) %>
   <%= link_to "Feed", :root %>
-  <%= link_to "New Post", new_post_path %>
+  <%= link_to "Post", new_post_path %>
+  <%= link_to "Connect", users_path %>
 </div>
 
 <h1>Hello <%= current_user.name %></h1>
 
-<h2>Discover</h2>
+<h2>Connect:</h2>
 
 <div>
   <ul>
-    <% @posts.each do |p| %>
+    <% @users.each do |u| %>
       <li>
-        <h2><%= p.title %></h2>
-        <p><%= p.body %></p>
-        <%= link_to "See Post", p %>
+        <h2><%= link_to u.name, u %></h2>
       </li>
     <% end %>
   </ul>
 </div>
-<div>
-</div>
-<div>
-  <%= link_to "Create Post", new_post_path %>
-  <%= link_to "Feed", posts_path %>
-</div>
-<%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
