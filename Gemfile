@@ -64,12 +64,12 @@ end
 
 gem "devise", "~> 4.9"
 
-# gem "omniauth"
+gem "omniauth"
+gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
-gem "omniauth-github"
+# gem "omniauth-github"
 # gem "omniauth-twitter2"
 
 gem "jsbundling-rails"
 
-gem "rb-gravatar"
