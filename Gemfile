@@ -73,3 +73,6 @@ gem "omniauth-rails_csrf_protection"
 
 gem "jsbundling-rails"
 
+
+gem "letter_opener", group: :development
+
