@@ -5,9 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
         :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
-  # validates :name, uniqueness: true, presence: true, length: { minimum: 4 }
-  # validates :email, uniqueness: true, presence: true, length: { minimum: 10 }
-  # validates :password, length: { in: 8..12 }
+  validates :name, uniqueness: true, presence: true
+  validates :email, uniqueness: true, presence: true, length: { minimum: 10 }
+  validates :password, length: { minimum: 8 }
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy

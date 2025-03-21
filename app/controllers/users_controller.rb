@@ -14,4 +14,10 @@ class UsersController < ApplicationController
     @parameters = URI.encode_www_form('d' => "https://www.example.com/default.jpg", 's' => 100)
     @image = "https://www.gravatar.com/avatar/#{@hash}?#{@parameters}"
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to new_user_session_path
+  end
 end
