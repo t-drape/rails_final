@@ -5,9 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
         :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
-  validates :name, uniqueness: true, presence: true, length: { minimum: 4 }
-  validates :email, uniqueness: true, presence: true, length: { minimum: 10 }
-  validates :password, length: { in: 8..12 }
+  # validates :name, uniqueness: true, presence: true, length: { minimum: 4 }
+  # validates :email, uniqueness: true, presence: true, length: { minimum: 10 }
+  # validates :password, length: { in: 8..12 }
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -31,16 +31,13 @@ class User < ApplicationRecord
   # has_and_belongs_to_many :followers, through: :users_users
 
   def self.from_omniauth(auth)
-    uid = auth[:uid]
-    provider = auth[:provider]
     # where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
     #   user.email = auth.info.email
     #   user.password = Devise.friendly_token[0, 20]
     #   user.name = auth.info.name
     #   user.avatar_url = auth.info.image
     # end
-    find_or_create_by(provider: provider, uid: uid) do |user|
-      user.id = auth.uid
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
       user.name = auth.info.name
