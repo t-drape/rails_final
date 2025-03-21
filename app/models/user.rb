@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  after_create :send_welcome_email
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -47,6 +48,12 @@ class User < ApplicationRecord
       # If you are using confirmable and the provider(s) you use validate emails,
       # uncomment the line below to skip the confirmation emails.
     end
+  end
+
+  private
+
+  def send_welcome_email
+    UserMailer.welcome_email(self).deliver_now!
   end
 
 
