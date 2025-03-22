@@ -83,7 +83,7 @@ production:
     <<: *default
     database: final_production
     username: final
-    password: <%= ENV["FINAL_DATABASE_PASSWORD"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: final_production_cache
