@@ -6,20 +6,20 @@ Rails.application.configure do
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 
-  # config.action_mailer.delivery_method = :letter_opener
-  # config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "example.com",
-    user_name: ENV["USER_NAME"],
-    password: ENV["PASSWORD"],
-    authentication: "plain",
-    enable_starttls: true,
-    open_timeout: 5,
-    read_timeout: 5
-  }
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: "example.com",
+  #   user_name: ENV["USER_NAME"],
+  #   password: ENV["PASSWORD"],
+  #   authentication: "plain",
+  #   enable_starttls: true,
+  #   open_timeout: 5,
+  #   read_timeout: 5
+  # }
 
   # Do not eager load code on boot.
   config.eager_load = false
