@@ -3,7 +3,7 @@
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
 # docker build -t final .
-docker run -d -p 80:80 -e RAILS_MASTER_KEY=f8247e7a3dfc2c419620c0166d9e1001 --name final final
+# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name final final
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
@@ -47,7 +47,7 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 # RUN SECRET_KEY_BASE=ENV["master_key"] RAILS_ENV=production bundle exec rake assets:precompile
-RUN ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE=f8247e7a3dfc2c419620c0166d9e1001 ./bin/rails assets:precompile
 
 
 
