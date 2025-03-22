@@ -2,7 +2,7 @@
 # check=error=true
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-docker build -t final .
+# docker build -t final .
 docker run -d -p 80:80 -e RAILS_MASTER_KEY=f8247e7a3dfc2c419620c0166d9e1001 --name final final
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
