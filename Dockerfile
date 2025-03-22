@@ -72,7 +72,7 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 # RUN SECRET_KEY_BASE=ENV["master_key"] RAILS_ENV=production bundle exec rake assets:precompile
-RUN SECRET_KEY_BASE=dummy ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE=$(openssl rand -hex 32) ./bin/rails assets:precompile
 
 
 
