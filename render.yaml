@@ -1,12 +1,12 @@
 databases:
-  - name: Social Database
-    databaseName: social_database_m1dd
-    user: social_database_m1dd_user
+  - name: Social
+    databaseName: mysocialdb
+    user: tjdrape
     plan: free
 
 services:
   - type: web
-    name: Social Database
+    name: Social
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
@@ -15,8 +15,8 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: Social Database
-          property: connectionString
+          name: Social
+          property: postgresql://tjdrape:E73yoHj3qw1484wAgvGF2NVvXyXiAjXR@dpg-cvfgmjnnoe9s73bhc1qg-a.oregon-postgres.render.com/mysocialdb_42ex
       - key: RAILS_MASTER_KEY
         sync: false
       - key: WEB_CONCURRENCY
