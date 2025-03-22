@@ -16,7 +16,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: Social
-          property: postgresql://tjdrape:E73yoHj3qw1484wAgvGF2NVvXyXiAjXR@dpg-cvfgmjnnoe9s73bhc1qg-a.oregon-postgres.render.com/mysocialdb_42ex
+          property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
       - key: WEB_CONCURRENCY
